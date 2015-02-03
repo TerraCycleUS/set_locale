@@ -4,7 +4,10 @@ module SetLocale
   class Engine < ::Rails::Engine
     config.after_initialize do |app|
       SetLocale.initialize
-      ApplicationController.send :include, SetLocale::ControllerHelpers
+
+      ActionDispatch::Callbacks.to_prepare do
+        ApplicationController.send :include, SetLocale::ControllerHelpers
+      end
     end
   end
 end
